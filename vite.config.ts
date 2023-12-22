@@ -9,9 +9,11 @@ import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 
 const pwaOptions: Partial<VitePWAOptions> = {
-  mode: "development",
   base: "/",
   includeAssets: ["favicon.svg"],
+  devOptions: {
+    enabled: true
+  },
   manifest: {
     name: "PWA",
     short_name: "PWA",

@@ -3,8 +3,10 @@
     <v-responsive class="fill-height"><!--align-center text-center -->
       <div style="height: 50px;"></div>
       <div class="pointer" style="position: relative; text-align: center; color: white;">
-        <v-img :src="active.img" class="rounded-xl"
-          height="72vh" cover style="opacity: 0.7;"></v-img> <!--style="opacity: 0.7;"-->
+        
+        <v-img :src="active.img" class="rounded-xl" @load="mainImgageLoading = false" height="72vh" cover style="opacity: 0.7;">
+          <v-skeleton-loader v-if="mainImgageLoading" class="rounded-xl" height="72vh" :loading="true"></v-skeleton-loader>
+        </v-img> <!--style="opacity: 0.7;"-->
         <span class="text-h4 font-weight-bold" style="position: absolute; bottom: 15vh; left: 15vw;">{{ active.title }}</span>
         <span class="text-h5 font-weight-regular" style="position: absolute; bottom: 5vh; left: 15vw;">{{ active.subtitle }}</span>
         <span class="text-left font-weight-light hidden-sm-and-down" style="position: absolute; bottom: 5vh; right: 15vw; width: 30vw;">
@@ -15,14 +17,16 @@
         <v-img v-for="(el, idx) of selector" :ref="`carousel-img-${idx}`"
           :src="el.img"
           class="rounded-xl mt-5 ml-2 mr-2"
-          :class="{ 'img-micro': !selector[idx].active, 'img-mini': selector[idx].active, 'shadow': selector[idx].shadow }" height="13vh"
-          @click="click(idx, $event)" @mouseenter="enterImg(idx)" @mouseleave="leaveImg(idx)" cover></v-img>
+          :class="{ 'img-micro': !el.active, 'img-mini': el.active, 'shadow': el.shadow }" height="13vh" @load="el.imgLoading = false"
+          @click="click(idx, $event)" @mouseenter="enterImg(idx)" @mouseleave="leaveImg(idx)" cover>
+          <v-skeleton-loader v-if="el.imgLoading" class="rounded-xl" type="image" :loading="true"></v-skeleton-loader>
+        </v-img>
       </div>
       <div class="d-flex flex-row justify-center" style="position: relative;">
         <v-icon v-for="(el, idx) of selector" class="rounded-xl ml-2 mr-2 pointer"
-          :class="{ 'img-btn-micro': !selector[idx].active, 'img-btn-mini': selector[idx].active, show: showBtn, hidden: !showBtn }"
+          :class="{ 'img-btn-micro': !el.active, 'img-btn-mini': el.active, show: showBtn, hidden: !showBtn }"
           @mouseenter="enterIco(idx)" @mouseleave="leaveIco(idx)">{{
-            selector[idx].active ? 'mdi-pause' : '' }}</v-icon>
+            el.active ? 'mdi-pause' : '' }}</v-icon>
       </div>
     </v-responsive>
   </v-container>
@@ -84,6 +88,7 @@ interface carouselItem {
   active: boolean
   shadow: boolean
   img: string
+  imgLoading: boolean
   title: string
   subtitle: string
   description: string
@@ -93,11 +98,13 @@ export default {
     return {
       mouseX: 0,
       mouseY: 0,
+      mainImgageLoading: true,
       selector: [
         {
         active: true,
         shadow: false,
         img: 'https://s3.motionvfx.com/mvfxpublic/templates/mMovements_DVR_homepage.jpg',
+        imgLoading: true,
         title: 'mMovements DVR',
         subtitle: 'Diverse Camera Moves Simulations for DaVinci Resolve',
         description: 'Say goodbye to static shots and hello to dynamic, visually stunning sequences -- with mMovements DVR you\'ll have the power to transform ordinary footage into a breathtaking cinematic experience. Enhance your footage with smooth tracking shots, captivating simulations, and awe-inspiring zooms to elevate your narrative'
@@ -106,6 +113,7 @@ export default {
         active: false,
         shadow: false,
         img: 'https://s3.motionvfx.com/mvfxpublic/templates/mEssentials_homepage.jpg',
+        imgLoading: true,
         title: '',
         subtitle: '',
         description: ''
@@ -114,6 +122,7 @@ export default {
         active: false,
         shadow: false,
         img: 'https://s3.motionvfx.com/mvfxpublic/templates/mBusiness_homepage6.jpg',
+        imgLoading: true,
         title: '',
         subtitle: '',
         description: ''
@@ -122,6 +131,7 @@ export default {
         active: false,
         shadow: false,
         img: 'https://s3.motionvfx.com/mvfxpublic/templates/mStyleVCR_homepage.jpg',
+        imgLoading: true,
         title: '',
         subtitle: '',
         description: ''
@@ -130,6 +140,7 @@ export default {
         active: false,
         shadow: false,
         img: 'https://s3.motionvfx.com/mvfxpublic/slider_home/Homepage_desktop.jpg',
+        imgLoading: true,
         title: '',
         subtitle: '',
         description: ''
