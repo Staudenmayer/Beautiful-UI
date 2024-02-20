@@ -1,0 +1,45 @@
+<div class="image-container">
+  <div class="image-background"></div>
+  <img src="https://s3.motionvfx.com/mvfxpublic/templates/mMovements_DVR_homepage.jpg">
+</div>
+<style>
+.image-container {
+  /* Optional styling for the main div */
+  width: fit-content;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px auto; /* Center the div horizontally */
+  position: relative; /* Enable relative positioning for child elements */
+  border-radius: 5px;
+  overflow: hidden; /* Hide overflowing content */
+  
+}
+
+.image-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150%;
+  height: 300%;
+  background-color: rgba(0, 0, 0, 0.5); /* Add a semi-transparent background */
+  z-index: -1; /* Place the background behind the image */
+  transform: rotate(-45deg); /* Rotate the background */
+  animation: move-background 5s ease-in-out infinite; /* Add animation */
+}
+
+.image-container img {
+  width: 250px; /* Set image width to 250px */
+  /* Optional styling for the image */
+  margin: 0 auto; /* Center the image horizontally */
+}
+
+@keyframes move-background {
+  0% {
+    transform: rotate(-45deg) translateY(-120%); /* Start from further away */
+  }
+  100% {
+    transform: rotate(-45deg) translateY(-50%); /* Move to bottom left */
+  }
+}
+
+</style>
